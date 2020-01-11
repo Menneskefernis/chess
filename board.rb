@@ -28,7 +28,7 @@ class Board
   def draw
     (state[0].size - 1).downto(0) do |i|
       state.each do |row|
-        #row[i].color = "blue" if row[i].x == 1 && row[i].y == 0
+        #row[i].piece = "\u{2657} " if row[i].x == 1 && row[i].y == 0
         print row[i]
       end
       puts ""
@@ -38,3 +38,5 @@ end
 
 board = Board.new
 board.draw
+
+#"\u{2657} "
