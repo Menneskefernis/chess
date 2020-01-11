@@ -38,5 +38,5 @@ class Game
 end
 
 chess = Game.new
-chess.start
-#chess.board.draw
+#chess.start
+chess.board.draw

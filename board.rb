@@ -35,12 +35,13 @@ class Board
   def draw
     puts ""
     (state[0].size - 1).downto(0) do |i|
+      print (i + 1).to_s + " "
       state.each do |row|
         print row[i]
       end
       puts ""
     end
-    puts ""
+    puts "  A B C D E F G H\n\n"
   end
 
   def prepare_board
