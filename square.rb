@@ -17,5 +17,5 @@ class Square
 
     self.piece.nil? ? piece = "  " : piece = self.piece
     piece.to_s.black.send (square_color)
-  end    
+  end
 end

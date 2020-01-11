@@ -67,4 +67,3 @@ end
 #board = Board.new
 #board.draw
 #puts board.state[0][0].piece.class
-
