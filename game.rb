@@ -1,9 +1,11 @@
+require 'colorize'
 require_relative 'board'
 
 class Game
-  attr_accessor :board
+  attr_accessor :board, :game_end
   def initialize
     @board = Board.new
+    @game_end = false
   end
 
   def intro
@@ -12,30 +14,45 @@ class Game
 
   def start
     intro
-    play_round
+    play_round until game_end
   end
 
   def play_round
     board.draw
     input = get_input
-    origin_square = select_square(input)
+    start_square = select_square(input)
 
-    if origin_square.piece.nil? #or the piece doesn't have the right color
-      puts "\n\nThere's no piece of your color on this square\n\n"
-      get_input
+    if start_square.piece.nil? #or the piece doesn't have the right color
+      puts "\n\nThere's no piece of your color on this square\n\n".red
+      play_round
     else
-      puts "Where would you like to move your piece?"
-      input = get_input
-      move_piece(input, origin_square)
+      handle_target_input(start_square)
     end
-    board.draw
   end
 
-  def move_piece(input, origin_square)
-    piece = origin_square.piece
-    origin_square.piece = nil
-    move_to_square = select_square(input)
-    move_to_square.piece = piece
+  def handle_target_input(start_square)
+    puts "\nWhere would you like to move your piece?\n".light_blue
+    input = get_input
+    target_square = select_square(input)
+    if start_square.piece.moves.include?([target_square.x, target_square.y])
+      move_piece(start_square, target_square)
+    else
+      puts "\n\nYou can't move there!".red
+      board.draw
+      handle_target_input(start_square)
+    end
+  end
+
+  def move_piece(start_square, target_square)
+    piece = start_square.piece
+    
+    start_square.piece = nil
+    target_square.piece = piece
+    
+    piece.x = target_square.x
+    piece.y = target_square.y
+    
+    piece.first_move = false if piece.is_a? Pawn
   end
 
   def select_square(input)
@@ -67,7 +84,7 @@ class Game
   def get_input
     input = ""
     loop do
-      puts "Please provide a row and a column you would like to select, ex. 'B3'"
+      puts "Please provide a row and a column, ex. 'B3'"
       input = gets.chomp
       break if input_valid? input
     end

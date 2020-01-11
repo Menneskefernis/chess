@@ -9,10 +9,11 @@ class Pawn < Piece
     @first_move = true
   end
   
-  def possible_moves
+  def moves
     moves = []
     moves << [x, y + 1]
     moves << [x, y + 2] if first_move
+    moves
   end
 
   def to_s
