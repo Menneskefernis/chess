@@ -30,24 +30,29 @@ class Game
 
   def play_round
     board.draw
-    puts "What piece you wanna move?\n"
+    puts "\nWhat piece you wanna move?\n"
     input = get_input
     start_square = select_square(input)
 
-    if start_square.piece.nil? || start_square.piece.color != current_player.color
+    unless start_square.piece && start_square.piece.color == current_player.color
       puts "\nThere's no piece of your color on this square\n".red
       play_round
     else
+      temp_square_color = start_square.color
+      start_square.color = "green"
+      board.draw
       handle_target_input(start_square)
+      start_square.color = temp_square_color
+      switch_player
     end
   end
 
-  def handle_target_input(start_square)
+  def handle_target_input(start)
     puts "\nWhere would you like to move your piece?\n".light_blue
     input = get_input
-    target_square = select_square(input)
-    if start_square.piece.moves.include?([target_square.x, target_square.y])
-      move_piece(start_square, target_square)
+    target = select_square(input)
+    if start.piece.moves.include?([target.x, target.y]) #if target.piece doesn't include own color
+      move_piece(start, target)
     else
       puts "\n\nYou can't move there!".red
       board.draw
@@ -96,7 +101,7 @@ class Game
   def get_input
     input = ""
     loop do
-      puts "Please enter row and column (ex. 'B3' or 'F6'), " + "#{current_player.name}".green
+      puts "Please enter row and column (ex. 'B3' or 'F6'), " + "#{current_player}".green
       input = gets.chomp
       break if input_valid? input
     end
@@ -104,13 +109,16 @@ class Game
   end
 
   def input_valid?(input)
-    #input.downcase!
     return false unless input.size == 2
     
     column, row = input.downcase.split('')
     return false unless ("a".."h").include?(column)
     return false unless (1..7).include?(row.to_i)
     true
+  end
+
+  def switch_player
+    current_player == player1 ? self.current_player = player2 : self.current_player = player1
   end
 end
 
