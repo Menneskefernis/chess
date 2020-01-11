@@ -19,6 +19,3 @@ class Square
     piece.to_s.black.send (square_color)
   end    
 end
-
-#square = Square.new(4, 5, "magenta")
-#puts square

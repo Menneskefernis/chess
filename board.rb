@@ -6,26 +6,12 @@ require './pieces/bishop'
 require './pieces/queen'
 require './pieces/king'
 
-KING_WHITE = "\u{2654} "
-QUEEN_WHITE = "\u{2655} "
-ROOK_WHITE = "\u{2656} "
-BISHOP_WHITE = "\u{2657} "
-KNIGHT_WHITE = "\u{2658} "
-PAWN_WHITE = "\u{2659} "
-KING_BLACK = "\u{265A} "
-QUEEN_BLACK = "\u{265B} "
-ROOK_BLACK = "\u{265C} "
-BISHOP_BLACK = "\u{265D} "
-KNIGHT_BLACK = "\u{265E} "
-PAWN_BLACK = "\u{265F} "
-
-#"\u{2657} "
-
 class Board
   attr_accessor :state
   
   def initialize
     @state = create_board(8, 8)
+    prepare_board
   end
 
   def create_board(height, width)
@@ -57,7 +43,7 @@ class Board
     puts ""
   end
 
-  def set_up_board
+  def prepare_board
     pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
 
     add_pieces(Pawn, 1, "white")
@@ -77,8 +63,7 @@ class Board
   end
 end
 
-board = Board.new
-board.set_up_board
-board.draw
-puts board.state[0][0].piece.class
+#board = Board.new
+#board.draw
+#puts board.state[0][0].piece.class
 
