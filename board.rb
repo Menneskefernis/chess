@@ -1,4 +1,10 @@
 require_relative 'square'
+require './pieces/pawn'
+require './pieces/rook'
+require './pieces/knight'
+require './pieces/bishop'
+require './pieces/queen'
+require './pieces/king'
 
 KING_WHITE = "\u{2654} "
 QUEEN_WHITE = "\u{2655} "
@@ -52,21 +58,20 @@ class Board
   end
 
   def set_up_board
-    pieces_white = [ROOK_WHITE, KNIGHT_WHITE, BISHOP_WHITE, KING_WHITE, QUEEN_WHITE, BISHOP_WHITE, KNIGHT_WHITE, ROOK_WHITE]
-    pieces_black = [ROOK_BLACK, KNIGHT_BLACK, BISHOP_BLACK, QUEEN_BLACK, KING_BLACK, BISHOP_BLACK, KNIGHT_BLACK, ROOK_BLACK]
-    
-    add_pieces(1, PAWN_WHITE)
-    add_pieces(6, PAWN_BLACK)
-    add_pieces(0, pieces_white)
-    add_pieces(7, pieces_black)
+    pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
+
+    add_pieces(Pawn, 1, "white")
+    add_pieces(Pawn, 6, "black")
+    add_pieces(pieces, 0, "white")
+    add_pieces(pieces, 7, "black")
   end
 
-  def add_pieces(row, content)
+  def add_pieces(pieces, row, color)
     8.times do |i|
-      if content.is_a? Array
-        state[i][row].piece = content[i]
+      if pieces.is_a? Array
+        state[i][row].piece = pieces[i].new(i, row, color)
       else
-        state[i][row].piece = content
+        state[i][row].piece = pieces.new(i, row, color)
       end
     end
   end
@@ -75,4 +80,5 @@ end
 board = Board.new
 board.set_up_board
 board.draw
+puts board.state[0][0].piece.class
 

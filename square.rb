@@ -1,8 +1,8 @@
 require 'colorize'
 
 class Square
-  attr_accessor :piece, :color
-  attr_reader :x, :y
+  attr_accessor :piece
+  attr_reader :x, :y, :color
 
   def initialize(x, y, color)
     @x = x
@@ -16,10 +16,9 @@ class Square
     piece = ""
 
     self.piece.nil? ? piece = "  " : piece = self.piece
-    piece.black.send (square_color)
+    piece.to_s.black.send (square_color)
   end    
 end
 
 #square = Square.new(4, 5, "magenta")
 #puts square
-
