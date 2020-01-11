@@ -1,15 +1,26 @@
 require 'colorize'
 require_relative 'board'
+require_relative 'player'
 
 class Game
-  attr_accessor :board, :game_end
+  attr_accessor :board, :game_end, :current_player
+  attr_reader :player1, :player2
   def initialize
     @board = Board.new
+    @player1 = Player.new("white")
+    @player2 = Player.new("black")
+    @current_player = player1
     @game_end = false
   end
 
   def intro
     puts "This is Chess! A game for smart people... why don't you just stop here?\n\n"
+    puts "Player 1, can we get a name?"
+    #player1.name = gets.chomp
+    puts player1.color
+    puts "\nPlayer 2, would you mind as well?"
+    #player2.name = gets.chomp
+    puts player2.color
   end
 
   def start
@@ -19,11 +30,12 @@ class Game
 
   def play_round
     board.draw
+    puts "What piece you wanna move?\n"
     input = get_input
     start_square = select_square(input)
 
-    if start_square.piece.nil? #or the piece doesn't have the right color
-      puts "\n\nThere's no piece of your color on this square\n\n".red
+    if start_square.piece.nil? || start_square.piece.color != current_player.color
+      puts "\nThere's no piece of your color on this square\n".red
       play_round
     else
       handle_target_input(start_square)
@@ -84,7 +96,7 @@ class Game
   def get_input
     input = ""
     loop do
-      puts "Please provide a row and a column, ex. 'B3'"
+      puts "Please enter row and column (ex. 'B3' or 'F6'), " + "#{current_player.name}".green
       input = gets.chomp
       break if input_valid? input
     end

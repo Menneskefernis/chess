@@ -39,7 +39,6 @@ class Board
       state.each do |row|
         print row[i]
       end
-      puts ""
     end
     puts "  A B C D E F G H\n\n"
   end
