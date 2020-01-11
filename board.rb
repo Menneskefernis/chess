@@ -4,11 +4,11 @@ class Board
   attr_accessor :state
   
   def initialize
-    @state = create_board
+    @state = create_board(8, 8)
   end
 
-  def create_board
-    Array.new(8) { |x| Array.new(8) do |y|
+  def create_board(height, width)
+    Array.new(width) { |x| Array.new(height) do |y|
       color = set_square_color(x, y)
       Square.new(x, y, color)
     end
@@ -18,13 +18,23 @@ class Board
   def set_square_color(x, y)
     color = ""
     if x % 2 == 0
-      y % 2 == 0 ? color = "white" : color = "magenta"
-    else
       y % 2 == 0 ? color = "magenta" : color = "white"
+    else
+      y % 2 == 0 ? color = "white" : color = "magenta"
     end
     color
+  end
+
+  def draw
+    (state[0].size - 1).downto(0) do |i|
+      state.each do |row|
+        #row[i].color = "blue" if row[i].x == 1 && row[i].y == 0
+        print row[i]
+      end
+      puts ""
+    end
   end
 end
 
 board = Board.new
-puts board.state
+board.draw
