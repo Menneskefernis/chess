@@ -52,7 +52,8 @@ class Game
     return play_round if input == "z"
     
     target = select_square(input)
-    if start.piece.moves.include?([target.x, target.y]) #if target.piece doesn't include own color
+    
+    if start.piece.moves(board, current_player).include?([target.x, target.y])
       move_piece(start, target)
       switch_player
     else
