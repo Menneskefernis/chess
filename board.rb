@@ -51,7 +51,7 @@ class Board
     add_pieces(Pawn, 6, "black")
     add_pieces(pieces, 0, "white")
     add_pieces(pieces, 7, "black")
-    state[4][4].piece = Rook.new(4, 4, "white")
+    state[3][3].piece = Bishop.new(3, 3, "white")
   end
 
   def add_pieces(pieces, row, color)

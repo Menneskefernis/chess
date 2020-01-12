@@ -5,8 +5,10 @@ class Queen < Piece
     super(x, y, color)
   end
   
-  def possible_moves
+  def moves(board, player)
     moves = []
+    moves += diagonal_up(board, self)
+    moves += diagonal_down(board, self)
   end
 
   def to_s
