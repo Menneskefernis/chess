@@ -40,6 +40,8 @@ class Game
     else
       #temp_square_color = start_square.color
       #start_square.color = "green"
+      reset_board_colors
+      color_moves(start_square)
       board.draw
       handle_target_input(start_square)
       #start_square.color = temp_square_color
@@ -52,14 +54,30 @@ class Game
     return play_round if input == "z"
     
     target = select_square(input)
-    
-    if start.piece.moves(board, current_player).include?([target.x, target.y])
+    moves = start.piece.moves(board, current_player)
+
+    if moves.include?([target.x, target.y])
       move_piece(start, target)
+      reset_board_colors
       switch_player
     else
       puts "\n\nYou can't move there!".red
       board.draw
       handle_target_input(start)
+    end
+  end
+
+  def color_moves(square)
+    square.piece.moves(board, current_player).each do |move|
+      board.state[move[0]][move[1]].color = "green"
+    end
+  end
+
+  def reset_board_colors
+    board.state.each_with_index do |column, x|
+      column.each_with_index do |row, y|
+        row.color = board.set_square_color(x, y)
+      end
     end
   end
 

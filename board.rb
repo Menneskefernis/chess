@@ -54,7 +54,7 @@ class Board
   end
 
   def add_pieces(pieces, row, color)
-    8.times do |i|
+    (state.size).times do |i|
       if pieces.is_a? Array
         state[i][row].piece = pieces[i].new(i, row, color)
       else
