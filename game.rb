@@ -141,7 +141,7 @@ class Game
     
     column, row = input.downcase.split('')
     return false unless ("a".."h").include?(column)
-    return false unless (1..7).include?(row.to_i)
+    return false unless (1..8).include?(row.to_i)
     true
   end
 
