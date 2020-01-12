@@ -43,6 +43,12 @@ class Game
       reset_board_colors
       color_moves(start_square)
       board.draw
+      
+      if start_square.piece.moves(board, current_player).empty?
+        puts "You have nowhere to move that piece".blue
+        play_round
+      end
+      
       handle_target_input(start_square)
       #start_square.color = temp_square_color
     end
@@ -52,7 +58,7 @@ class Game
     puts "\nWhere would you like to move your piece?\n".light_blue
     input = get_input
     return play_round if input == "z"
-    
+
     target = select_square(input)
     moves = start.piece.moves(board, current_player)
 

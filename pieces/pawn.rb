@@ -17,7 +17,7 @@ class Pawn < Piece
     moves += opponent_squares(board, player)
 
     moves << [x, y.send(operator, 1)] unless board.state[x][y.send(operator, 1)].piece
-    moves << [x, y.send(operator, 2)] if first_move
+    moves << [x, y.send(operator, 2)] if first_move && board.state[x][y.send(operator, 1)].piece.nil?
     moves
   end
 

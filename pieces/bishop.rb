@@ -1,12 +1,15 @@
 require_relative 'piece'
+require './moves_helper'
 
 class Bishop < Piece
+  include MovesHelper
   def initialize(x, y, color)
     super(x, y, color)
   end
   
-  def possible_moves
+  def moves
     moves = []
+
   end
 
   def to_s
