@@ -38,25 +38,27 @@ class Game
       puts "\nThere's no piece of your color on this square\n".red
       play_round
     else
-      temp_square_color = start_square.color
-      start_square.color = "green"
+      #temp_square_color = start_square.color
+      #start_square.color = "green"
       board.draw
       handle_target_input(start_square)
-      start_square.color = temp_square_color
-      switch_player
+      #start_square.color = temp_square_color
     end
   end
 
   def handle_target_input(start)
     puts "\nWhere would you like to move your piece?\n".light_blue
     input = get_input
+    return play_round if input == "z"
+    
     target = select_square(input)
     if start.piece.moves.include?([target.x, target.y]) #if target.piece doesn't include own color
       move_piece(start, target)
+      switch_player
     else
       puts "\n\nYou can't move there!".red
       board.draw
-      handle_target_input(start_square)
+      handle_target_input(start)
     end
   end
 
@@ -109,6 +111,7 @@ class Game
   end
 
   def input_valid?(input)
+    return true if input == "z"
     return false unless input.size == 2
     
     column, row = input.downcase.split('')

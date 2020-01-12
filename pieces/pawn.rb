@@ -11,8 +11,11 @@ class Pawn < Piece
   
   def moves
     moves = []
-    moves << [x, y + 1]
-    moves << [x, y + 2] if first_move
+    operator = "+"
+    operator = "-" if color == "black"
+
+    moves << [x, y.send(operator, 1)]
+    moves << [x, y.send(operator, 2)] if first_move
     moves
   end
 
